@@ -37,7 +37,7 @@ echo ""
 
 echo "Cloning trees"
 cd ~/twrp-11
-git clone https://github.com/rufus582/android_device_recovery_samsung_m31s
+git clone https://github.com/rufus582/android_device_recovery_samsung_m31s ~/twrp-11/device/samsung/m31s
 echo ""
 
 echo "Starting Build"
