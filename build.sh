@@ -29,7 +29,7 @@ echo ""
 
 echo "Syncing TWRP-11"
 mkdir ~/twrp-11
-cd /drone/src/ui.xml && ls
+cd /drone/src/ && ls
 cd ~/twrp-11
 repo init https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11 --depth=1
 repo sync -j 20
