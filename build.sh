@@ -29,10 +29,11 @@ echo ""
 
 echo "Syncing TWRP-11"
 mkdir ~/twrp-11
+cd /drone/src/ui.xml && ls
 cd ~/twrp-11
 repo init https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11 --depth=1
 repo sync -j 20
-#cp /drone/src/ui.xml ~/twrp-11/bootable/recovery/gui/theme/portrait_hdpi/ui.xml || exit 1
+cp /drone/src/ui.xml ~/twrp-11/bootable/recovery/gui/theme/portrait_hdpi/ui.xml || exit 1
 echo ""
 
 echo "Cloning trees"
