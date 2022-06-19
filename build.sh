@@ -37,8 +37,13 @@ echo ""
 echo "Cloning trees"
 cd ~/twrp-11
 git clone https://github.com/rufus582/android_device_recovery_samsung_m31s ~/twrp-11/device/samsung/m31s
+echo ""
+
+echo "Applying patches"
+cd ~/twrp-11/bootable/recovery
+git am /root/project/patches/* || exit 3
 #Copy ui.xml from device tree
-cp ~/twrp-11/device/samsung/m31s/ui.xml ~/twrp-11/bootable/recovery/gui/theme/portrait_hdpi/
+#cp ~/twrp-11/device/samsung/m31s/ui.xml ~/twrp-11/bootable/recovery/gui/theme/portrait_hdpi/
 echo ""
 
 echo "Starting Build"
