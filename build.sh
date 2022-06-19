@@ -27,33 +27,38 @@ echo "Installed all the dependencies"
 echo ""
 echo ""
 
-echo "Syncing TWRP-11"
-mkdir ~/twrp-11
-cd ~/twrp-11
-repo init https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-11 --depth=1
-repo sync -j 20
+echo "Files in /root/project"
+ls /root/project
+
+echo "Syncing OFox"
+git clone https://gitlab.com/orangefox/sync.git ; cd sync
+./orangefox_sync.sh --debug --ssh 0 --path ~/fox-10 -b 10.0
+cd ~/fox-10/vendor/recovery
+echo "Applying patches"
+git am /root/project/patches/0001-OrangeFox.sh-Use-bash-as-the-default-shell-if-bash-h.patch
+git am /root/project/patches/0002-New-build-vars-FOX_DEBUG_BUILD_RAW_IMAGE-FOX_REPLACE.patch
+git am /root/project/patches/0003-FoxExtras-fox_list_apps-Add-support-for-A11-12-s-enc.patch
+git am /root/project/patches/0004-FoxExtras-fox_list_apps-Add-various-checks.patch
+cp /root/project/files/AromaFM.zip ~/fox-10/vendor/recovery/FoxFiles/AromaFM/AromaFM.zip
 echo ""
 
 echo "Cloning trees"
-cd ~/twrp-11
-git clone https://github.com/rufus582/android_device_recovery_samsung_m31s ~/twrp-11/device/samsung/m31s
-#Copy ui.xml from device tree
-cp ~/twrp-11/device/samsung/m31s/ui.xml ~/twrp-11/bootable/recovery/gui/theme/portrait_hdpi/
+cd ~/fox-10
+git clone https://github.com/rufus582/android_device_recovery_samsung_m31s -b ofox-10 ~/fox-10/device/samsung/m31s
+echo "Download Magisk-v24.3.apk"
+cd ~/fox-10/device/samsung/m31s/
+wget https://github.com/topjohnwu/Magisk/releases/download/v24.3/Magisk-v24.3.apk
+export FOX_USE_SPECIFIC_MAGISK_ZIP="$HOME/fox-10/device/samsung/m31s/Magisk-v24.3.apk"
 echo ""
 
 echo "Starting Build"
-cd ~/twrp-11
+cd ~/fox-10
 . build/envsetup.sh
-export ALLOW_MISSING_DEPENDENCIES=true
-lunch twrp_m31s-eng
-make recoveryimage -j$( nproc --all )
+lunch omni_m31s-eng
+make recoveryimage
 echo ""
 
-echo "Uploading recovery image"
-cd ~/twrp-11/out/target/product/*
-version=$(cat ~/twrp-11/bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d \" -f2)
-version=$(echo $version | cut -c1-5)
-
-mv recovery.img TWRP-11-${version}-m31s-$(TZ='Asia/Karachi' date "+%Y%m%d-%H%M").img
+echo "Uploading zip"
+cd ~/fox-10/out/target/product/*
 curl -sL https://git.io/file-transfer | sh
-./transfer wet $(ls TWRP*.img)
+./transfer wet $(ls OrangeFox*.zip)
