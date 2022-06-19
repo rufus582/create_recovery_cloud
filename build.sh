@@ -64,6 +64,6 @@ make recoveryimage
 echo ""
 
 echo "Uploading zip"
-cd ~/fox-10/out/target/product/*
+cd ~/fox-10/out/target/product/m31s && ls
 curl -sL https://git.io/file-transfer | sh
 ./transfer wet $(ls OrangeFox*.zip)
