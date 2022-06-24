@@ -44,7 +44,7 @@ echo ""
 
 echo "Cloning trees"
 cd ~/fox-10
-git clone https://github.com/rufus582/android_device_recovery_samsung_m31s -b ofox-10 ~/fox-10/device/samsung/m31s
+git clone https://github.com/rufus582/recovery_m31s -b ofox-10 ~/fox-10/device/samsung/m31s
 echo "Download Magisk-v24.3.apk"
 cd ~/fox-10/device/samsung/m31s/
 wget https://github.com/topjohnwu/Magisk/releases/download/v24.3/Magisk-v24.3.apk
