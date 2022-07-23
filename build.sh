@@ -47,7 +47,7 @@ cd ~/fox-10
 git clone https://github.com/rufus582/recovery_ofox_m31s -b fox_10.0 ~/fox-10/device/samsung/m31s
 echo "Download Magisk-v24.3.apk"
 cd ~/fox-10/device/samsung/m31s/
-wget https://github.com/topjohnwu/Magisk/releases/download/v25.1/Magisk-v25.1.apk
+wget https://github.com/topjohnwu/Magisk/releases/download/v25.2/Magisk-v25.2.apk
 export FOX_USE_SPECIFIC_MAGISK_ZIP="$HOME/fox-10/device/samsung/m31s/Magisk-v25.1.apk"
 echo ""
 
