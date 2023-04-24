@@ -8,4 +8,5 @@ version=$(echo $version | cut -c1-5)
 mv recovery.img TWRP-11-${version}-m31s-$(TZ='Asia/Karachi' date "+%Y%m%d-%H%M").img
 
 echo "Starting upload..."
-curl --upload-file $(ls TWRP*.img) https://transfer.sh/TWRP-m31s
+# curl --upload-file $(ls TWRP*.img) https://transfer.sh/TWRP-m31s
+curl -T $(ls TWRP*.img) temp.sh
