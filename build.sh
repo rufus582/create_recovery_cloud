@@ -30,7 +30,9 @@ echo ""
 echo "Syncing SHRP-10 Sources"
 mkdir ~/shrp-10
 cd ~/shrp-10
-repo init https://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0 --depth=1
+echo "repo initializing"
+repo init -u https://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0 --depth=1
+echo "repo initialized"
 repo sync -j $(nproc --all)
 
 echo "Cloning trees"
@@ -48,7 +50,7 @@ make recoveryimage
 echo ""
 
 echo "Uploading zip"
-cd ~/shrp-10/out/target/product/m31s && ls
+cd ~/shrp-10/out/target/product/ && ls
 
 VERSION=$(cat ~/shrp-10/bootable/recovery/SHRPVARS.cpp | grep "shrp_ver" | cut -d \, -f2 | cut -d \" -f2)
 cp recovery.img SHRP-10-$VERSION-a51-$(TZ=Asia/Karachi date +%Y%m%d-%H%M).img
