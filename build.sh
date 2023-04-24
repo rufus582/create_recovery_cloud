@@ -27,39 +27,32 @@ echo "Installed all the dependencies"
 echo ""
 echo ""
 
-echo "Files in /root/project"
-ls /root/project
-
-echo "Syncing OFox"
-git clone https://gitlab.com/orangefox/sync.git ; cd sync
-./orangefox_sync.sh --debug --ssh 0 --path ~/fox-10 -b 10.0
-cd ~/fox-10/vendor/recovery
-echo "Applying patches"
-echo "Patch 1"
-git am /root/project/patches/0001-OrangeFox.sh-Use-bash-as-the-default-shell-if-bash-h.patch
-echo "Patch 2"
-git am /root/project/patches/0002-New-build-vars-FOX_DEBUG_BUILD_RAW_IMAGE-FOX_REPLACE.patch
-cp /root/project/files/AromaFM.zip ~/fox-10/vendor/recovery/FoxFiles/AromaFM/AromaFM.zip
-echo ""
+echo "Syncing SHRP-10 Sources"
+mkdir ~/shrp-10
+cd ~/shrp-10
+repo init https://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0 --depth=1
+repo sync -j $(nproc --all)
 
 echo "Cloning trees"
-cd ~/fox-10
-git clone https://github.com/rufus582/recovery_m31s -b ofox-10 ~/fox-10/device/samsung/m31s
-echo "Download Magisk-v24.3.apk"
-cd ~/fox-10/device/samsung/m31s/
-wget https://github.com/topjohnwu/Magisk/releases/download/v24.3/Magisk-v24.3.apk
-export FOX_USE_SPECIFIC_MAGISK_ZIP="$HOME/fox-10/device/samsung/m31s/Magisk-v24.3.apk"
+cd ~/shrp-10
+git clone https://github.com/rufus582/recovery_m31s -b shrp-10 ~/shrp-10/device/samsung/m31s
 echo ""
 
 echo "Starting Build"
-cd ~/fox-10
-export CURR_DEVICE=m31s
+cd ~/shrp-10
 . build/envsetup.sh
-lunch omni_m31s-eng
+export ALLOW_MISSING_DEPENDENCIES=true
+export LC_ALL="C"
+lunch omni_a51-eng
 make recoveryimage
 echo ""
 
 echo "Uploading zip"
-cd ~/fox-10/out/target/product/m31s && ls
-curl -sL https://git.io/file-transfer | sh
-./transfer wet $(ls OrangeFox*.zip)
+cd ~/shrp-10/out/target/product/m31s && ls
+
+VERSION=$(cat ~/shrp-10/bootable/recovery/SHRPVARS.cpp | grep "shrp_ver" | cut -d \, -f2 | cut -d \" -f2)
+cp recovery.img SHRP-10-$VERSION-a51-$(TZ=Asia/Karachi date +%Y%m%d-%H%M).img
+
+curl -T $(ls SHRP*.zip) temp.sh
+curl -T $(ls SHRP*.img) temp.sh
+

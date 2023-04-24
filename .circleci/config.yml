@@ -5,23 +5,25 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: brock5555/recovery
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    #resource_class: xlarge
-    steps:
-      - checkout
-      - run:
-          name: "Start syncing and compile"
-          command: "bash build.sh"
+    build:
+        # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+        # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+        docker:
+            - image: brock5555/recovery
+        # Add steps to the job
+        # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+        #resource_class: xlarge
+        steps:
+            - checkout
+            - run:
+                  name: "Start syncing and compile"
+                  command: "bash build.sh"
+            - store_artifacts:
+                  path: ~/shrp-10/out/target/product/
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  build-recovery-workflow:
-    jobs:
-      - build
+    build-recovery-workflow:
+        jobs:
+            - build
