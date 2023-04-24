@@ -31,6 +31,7 @@ echo "Syncing SHRP-10 Sources"
 mkdir ~/shrp-10
 cd ~/shrp-10
 echo "repo initializing"
+git config user.name "rufus582"
 repo init -u https://github.com/SHRP/platform_manifest_twrp_omni.git -b v3_10.0 --depth=1
 echo "repo initialized"
 repo sync -j $(nproc --all)
