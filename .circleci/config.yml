@@ -5,22 +5,31 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: brock5555/recovery
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Start syncing and compile"
-          command: "bash build.sh"
+    build:
+        # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+        # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+        docker:
+            - image: brock5555/recovery
+        # Add steps to the job
+        # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+        steps:
+            - checkout
+            - run:
+                  name: "(1/4) Install dependencies"
+                  command: "bash dependencies.sh"
+            - run:
+                  name: "(2/4) Sync TWRP-11 source"
+                  command: "bash sync_twrp.sh"
+            - run:
+                  name: "(3/4) Build TWRP"
+                  command: "bash build_twrp.sh"
+            - run:
+                  name: "(4/4) Upload TWRP.img"
+                  command: "bash upload.sh"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  build-recovery-workflow:
-    jobs:
-      - build
+    build-recovery-workflow:
+        jobs:
+            - build
