@@ -45,7 +45,7 @@ cd ~/shrp-10
 . build/envsetup.sh
 export ALLOW_MISSING_DEPENDENCIES=true
 export LC_ALL="C"
-lunch omni_a51-eng
+lunch omni_m31s-eng
 make recoveryimage
 echo ""
 
@@ -53,7 +53,7 @@ echo "Uploading zip"
 cd ~/shrp-10/out/target/product/ && ls
 
 VERSION=$(cat ~/shrp-10/bootable/recovery/SHRPVARS.cpp | grep "shrp_ver" | cut -d \, -f2 | cut -d \" -f2)
-cp recovery.img SHRP-10-$VERSION-a51-$(TZ=Asia/Karachi date +%Y%m%d-%H%M).img
+cp recovery.img SHRP-10-$VERSION-m31s-$(TZ=Asia/Karachi date +%Y%m%d-%H%M).img
 
 curl -T $(ls SHRP*.zip) temp.sh
 curl -T $(ls SHRP*.img) temp.sh
