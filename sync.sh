@@ -12,6 +12,6 @@ cd ~/twrp-11
 git clone https://github.com/rufus582/recovery_m31s ~/twrp-11/device/samsung/m31s
 echo ""
 
-echo "Copy ui.xml from device tree"
-cp ~/twrp-11/device/samsung/m31s/ui.xml ~/twrp-11/bootable/recovery/gui/theme/portrait_hdpi/
-echo ""
+# echo "Copy ui.xml from device tree"
+# cp ~/twrp-11/device/samsung/m31s/ui.xml ~/twrp-11/bootable/recovery/gui/theme/portrait_hdpi/
+# echo ""
