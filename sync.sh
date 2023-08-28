@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "Syncing TWRP-11"
+echo "Syncing PBRP-12.1"
 mkdir ~/pbrp-12.1
 cd ~/pbrp-12.1
-repo init -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1 --depth=1
+repo init -u git://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1
 repo sync -j 20
 echo ""
 
