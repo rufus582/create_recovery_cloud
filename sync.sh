@@ -9,7 +9,7 @@ echo ""
 
 echo "Cloning trees"
 cd ~/pbrp-12.1
-git clone https://github.com/rufus582/twrp_device_samsung_universal9611 ~/pbrp-12.1/device/samsung/m31s
+git clone https://github.com/rufus582/twrp_device_samsung_universal9611 ~/pbrp-12.1/device/samsung/universal9611
 echo ""
 
 # echo "Copy ui.xml from device tree"
